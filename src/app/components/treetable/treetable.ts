@@ -1245,10 +1245,10 @@ export class TreeTable implements AfterContentInit, OnInit, OnDestroy, Blockable
 
     toggleNodesWithCheckbox(event: Event, check: boolean) {
         let data = this.filteredNodes || this.value;
-        this._selection = check && data ? data.slice() : [];
+        this._selection = check && data ? data.slice().filter(x => x.data.enabled) : [];
         if (check) {
             if (data && data.length) {
-                for (let node of data) {
+                for (let node of data.filter(x => x.data.enabled)) {
                     this.propagateSelectionDown(node, true);
                 }
             }
@@ -1313,7 +1313,7 @@ export class TreeTable implements AfterContentInit, OnInit, OnDestroy, Blockable
         let index = this.findIndexInSelection(node);
         let dataKeyValue = this.dataKey ? String(ObjectUtils.resolveFieldData(node.data, this.dataKey)) : null;
 
-        if (select && index == -1) {
+        if (select && index == -1 && (<any>node).data.enabled) {
             this._selection =  [...this.selection||[],node]
             if (dataKeyValue) {
                 this.selectionKeys[dataKeyValue] = 1;
@@ -2545,7 +2545,7 @@ export class TTHeaderCheckbox  {
 
         if (data) {
             for (let node of data) {
-                if (this.tt.isSelected(node)) {
+                if (this.tt.isSelected(node) || !node.data.enabled) {
                     checked = true;
                 }
                 else  {
