@@ -2543,7 +2543,7 @@ export class TTHeaderCheckbox  {
         let checked: boolean;
         const data = this.tt.filteredNodes||this.tt.value;
 
-        if (data) {
+        if (data && data.some(x => x.data && x.data.enabled)) {
             for (let node of data) {
                 if (this.tt.isSelected(node) || !node.data.enabled) {
                     checked = true;
