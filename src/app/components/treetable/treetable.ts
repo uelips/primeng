@@ -2894,8 +2894,14 @@ export class TreeTableToggler {
             });
         }
 
-        this.tt.updateSerializedValue();
-        this.tt.tableService.onUIUpdate(this.tt.value);
+        let e = (<any>event.currentTarget).getElementsByClassName('pi')[0]
+        e.classList.remove('pi-fw', 'pi-chevron-right', 'pi-chevron-down')
+        e.classList.add('pi-spin', 'pi-spinner')
+
+        setTimeout(() => {
+            this.tt.updateSerializedValue();
+            this.tt.tableService.onUIUpdate(this.tt.value);
+        }, 0)
 
         event.preventDefault();
     }
