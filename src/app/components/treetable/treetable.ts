@@ -2514,6 +2514,9 @@ export class TTHeaderCheckbox  {
     }
 
     onClick(event: Event, checked) {
+        let e = (<any>event.currentTarget).getElementsByClassName('ui-chkbox-icon')[0]
+        e.classList.add('pi', 'pi-spin', 'pi-spinner')
+
         if (this.tt.value && this.tt.value.length > 0) {
             this.tt.toggleNodesWithCheckbox(event, !checked);
         }
